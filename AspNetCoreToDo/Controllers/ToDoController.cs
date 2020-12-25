@@ -11,12 +11,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace AspNetCoreTodo.Controllers
 {
     [Authorize]
-    public class ToDoController : Controller
+    public class TodoController : Controller
     {
         private readonly ITodoItemService _toDoItemService;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public ToDoController(ITodoItemService toDoItemService,
+        public TodoController(ITodoItemService toDoItemService,
             UserManager<IdentityUser> userManager)
         {
             _toDoItemService = toDoItemService;
@@ -30,7 +30,7 @@ namespace AspNetCoreTodo.Controllers
 
             var items = await _toDoItemService.GetIncompleteItemsAsync(currentUser);
 
-            var model = new ToDoViewModel()
+            var model = new TodoViewModel()
             {
                 Items = items
             };
