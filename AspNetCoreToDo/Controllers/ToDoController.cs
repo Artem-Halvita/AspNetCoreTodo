@@ -13,13 +13,13 @@ namespace AspNetCoreTodo.Controllers
     [Authorize]
     public class TodoController : Controller
     {
-        private readonly ITodoItemService _toDoItemService;
+        private readonly ITodoItemService _TodoItemService;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public TodoController(ITodoItemService toDoItemService,
+        public TodoController(ITodoItemService TodoItemService,
             UserManager<IdentityUser> userManager)
         {
-            _toDoItemService = toDoItemService;
+            _TodoItemService = TodoItemService;
             _userManager = userManager;
         }
 
@@ -28,7 +28,7 @@ namespace AspNetCoreTodo.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
 
-            var items = await _toDoItemService.GetIncompleteItemsAsync(currentUser);
+            var items = await _TodoItemService.GetIncompleteItemsAsync(currentUser);
 
             var model = new TodoViewModel()
             {
@@ -49,7 +49,7 @@ namespace AspNetCoreTodo.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
 
-            var succesfull = await _toDoItemService.AddItemAsync(newItem, currentUser);
+            var succesfull = await _TodoItemService.AddItemAsync(newItem, currentUser);
 
             if (!succesfull)
             {
@@ -70,7 +70,7 @@ namespace AspNetCoreTodo.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
 
-            var successfull = await _toDoItemService.MarkDoneAsync(id, currentUser);
+            var successfull = await _TodoItemService.MarkDoneAsync(id, currentUser);
             if (!successfull)
             {
                 return BadRequest("Could not mark item as done.");
